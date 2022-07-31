@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const port = 3000;
 const User = require("./models/user.js");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("./middlewares/auth-middleware.js");
 
 const app = express();
 const router = express.Router();
@@ -55,6 +56,12 @@ router.post("/auth", async (req, res) => {
     token, // JWT를 반환해야 정상적으로 프론트엔드에서 작동할 수 있도록 구현
   });
 }); // 내 정보 조회 API가 있어야 성공적으로 로그인을 할 수 있다. 지금은 반쪽만 된 상태
+
+// 사용자 인증 미들웨어
+router.get("/users/me", authMiddleware, async (req, res) => {
+  console.log(res.locals);
+  res.status(400).send({});
+});
 
 app.use("/api", express.urlencoded({ extended: false }), router);
 app.use(express.static("assets"));
