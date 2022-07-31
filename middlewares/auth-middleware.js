@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     User.findById(userId)
       .exec()
       .then((user) => {
-        res.locals.user = user;
+        res.locals.user = user; // 객체에 객체를 넣어놓음
         next(); // 미들웨어에 next()는 반드시 필요
       });
     // user가 항상 있다고 가정을 하고, user를 locals에 담는데

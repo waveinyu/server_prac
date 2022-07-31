@@ -59,8 +59,9 @@ router.post("/auth", async (req, res) => {
 
 // 사용자 인증 미들웨어
 router.get("/users/me", authMiddleware, async (req, res) => {
-  console.log(res.locals);
-  res.status(400).send({});
+  const { user } = res.locals;
+  console.log(user);
+  res.send({ user }); //로깅
 });
 
 app.use("/api", express.urlencoded({ extended: false }), router);
